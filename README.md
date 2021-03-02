@@ -15,6 +15,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 
 	"github.com/DustiasTheGuy/servman/service"
 )
@@ -22,18 +23,19 @@ import (
 func main() {
 	s := service.Service{
 		ProccessID: 0,
-		Debug:      false,
+		Debug:      true,
 		Path:       "main.exe",
 		WorkingDir: "D:/Development/GO/isak_tech/server",
 	}
 
-	if err := s.StartService(); err != nil { // the pid will get updated if the proccess was successfully started
-	    log.Fatal(err)
+	if err := s.StartService(); err != nil {
+		// the pid will be updated if proccess
+		// launches successfully
+		log.Fatal(err)
 	}
 
 	fmt.Println(s.IsAlive())
 }
-
 ```
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
