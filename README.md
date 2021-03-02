@@ -25,7 +25,7 @@ func main() {
 		ProccessID: 0,
 		Debug:      true,
 		Path:       "main.exe",
-		WorkingDir: "D:/Development/GO/isak_tech/server",
+		WorkingDir: "",
 	}
 
 	if err := s.StartService(); err != nil {
