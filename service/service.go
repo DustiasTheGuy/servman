@@ -1,6 +1,7 @@
 package service
 
 import (
+	"errors"
 	"fmt"
 	"os"
 	"os/exec"
@@ -41,6 +42,23 @@ func (s *Service) StartService() error {
 	}
 
 	return nil
+}
+
+// KillService kills the proccess and requires proccess id to be populated
+func (s *Service) KillService() error {
+	if s.IsAlive() {
+		p, err := os.FindProcess(s.ProccessID)
+
+		if err != nil {
+			return err
+		}
+
+		if err := p.Kill(); err != nil {
+			return err
+		}
+	}
+
+	return errors.New("Proccess May Have Already Been Closed")
 }
 
 // IsAlive checkes if a proccess is currently alive
