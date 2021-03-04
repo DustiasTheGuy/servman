@@ -13,7 +13,7 @@ var services []*service.Service
 func main() {
 	s := service.Service{
 		Label:      "isak_tech",
-		ProccessID: nil,
+		ProcessID:  nil,
 		Debug:      true,
 		Path:       "main.exe",
 		WorkingDir: "D:/Development/GO/isak_tech/server",

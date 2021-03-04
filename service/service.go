@@ -10,7 +10,7 @@ import (
 // Service contains nessecary information about a proccess
 type Service struct {
 	Label      string
-	ProccessID *int   // A reference to the proccess that can be used to terminate or modify the proccess
+	ProcessID  *int   // A reference to the proccess that can be used to terminate or modify the proccess
 	Path       string // where is the binary located?
 	WorkingDir string // what directory should the program launch from? very useful if the program is serving static files from a relative path
 	Debug      bool   // output useful messages
@@ -35,7 +35,7 @@ func (s *Service) StartService() error {
 		return err
 	}
 
-	s.ProccessID = &s.Cmd.Process.Pid
+	s.ProcessID = &s.Cmd.Process.Pid
 	if s.Debug {
 		fmt.Printf("Started Proccess: %d\n", s.Cmd.Process.Pid)
 	}
@@ -46,7 +46,7 @@ func (s *Service) StartService() error {
 // KillService kills the proccess and requires proccess id to be populated
 func (s *Service) KillService() error {
 	if s.IsAlive() {
-		p, err := os.FindProcess(*s.ProccessID)
+		p, err := os.FindProcess(*s.ProcessID)
 
 		if err != nil {
 			return err
@@ -62,7 +62,7 @@ func (s *Service) KillService() error {
 
 // IsAlive checkes if a proccess is currently alive
 func (s *Service) IsAlive() bool {
-	_, err := os.FindProcess(*s.ProccessID)
+	_, err := os.FindProcess(*s.ProcessID)
 
 	if err != nil {
 		if s.Debug {
