@@ -5,16 +5,18 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
+	"time"
 )
 
 // Service contains nessecary information about a proccess
 type Service struct {
 	Label      string
-	ProcessID  *int   // A reference to the proccess that can be used to terminate or modify the proccess
-	Path       string // where is the binary located?
-	WorkingDir string // what directory should the program launch from? very useful if the program is serving static files from a relative path
-	Debug      bool   // output useful messages
-	Cmd        *exec.Cmd
+	ProcessID  *int      // A reference to the proccess that can be used to terminate or modify the proccess
+	Path       string    // where is the binary located?
+	WorkingDir string    // what directory should the program launch from? very useful if the program is serving static files from a relative path
+	Debug      bool      // output useful messages
+	Cmd        *exec.Cmd // the parent
+	Started    time.Time // when did the process start?
 }
 
 // ConstructCmd creates a pointer to a cmd which can be used to execute commands
@@ -36,6 +38,7 @@ func (s *Service) StartService() error {
 	}
 
 	s.ProcessID = &s.Cmd.Process.Pid
+	s.Started = time.Now()
 	if s.Debug {
 		fmt.Printf("Started Proccess: %d\n", s.Cmd.Process.Pid)
 	}
